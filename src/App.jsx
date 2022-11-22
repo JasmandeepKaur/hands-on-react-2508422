@@ -1,20 +1,18 @@
-import React, { Component, useState } from 'react';
-import ListCast from './components/ListCast';
-import Modals from './components/Modals';
-
-function App() {
-  const name = 'StarGazers'
-  let [memberInfo, setMemberInfo] = useState(null);
+export default ({ cast, onChoice }) => {
   return (
-    <div className="container">
-      <hgroup>
-        <img src="images/group.svg" alt="StarGazers Group" />
-        <h1>Meet the Stargazers</h1>
-        <p>Members of an <b>intergalactic alliance</b> paving the way for peace and benevolence among all species. They are known for their enthusiasm for science, for their love of fun, and their dedication to education.</p>
-        <ListCast onChoice={(info) => { setMemberInfo(info) }} />
-        {memberInfo && <Modals member={memberInfo} handleClose={() => { setMemberInfo(null) }} />}
-      </hgroup>
+    <div style={{
+      display: "grid",
+      gridTemplateColumns: `repeat(auto-fit, minmax(90px, 1fr))`,
+      gap: `1rem`,
+      marginBottom: '1rem'
+    }}>
+      {
+        cast.map(member => (
+          <a onClick={() => { onChoice(member) }} key={member.id} data-tooltip={member.name}>
+            <img src={`images/${member.slug}_tn.svg`} alt={member.name} />
+          </a>
+        ))
+      }
     </div>
   )
 }
-export default App
